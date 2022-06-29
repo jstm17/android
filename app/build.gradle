@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.aj.netflix"
+        applicationId "com.bellano.netflix"
         minSdk 21
         targetSdk 32
         versionCode 1

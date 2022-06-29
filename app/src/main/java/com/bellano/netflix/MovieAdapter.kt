@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bellano.myapplication.R
 
 class MovieAdapter(var items: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MoviesViewsHolder>() {
 

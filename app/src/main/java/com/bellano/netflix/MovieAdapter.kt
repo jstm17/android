@@ -13,7 +13,7 @@ import org.w3c.dom.Text
 const val HEADER_TYPE = 0
 const val MOVIE_TYPE = 1
 
-class MovieAdapter(var items: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
+class MovieAdapter(var items: List<DisplayItem>) : RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
 
     open class MyViewHolder(val itemView: View): RecyclerView.ViewHolder(itemView)
 
@@ -24,9 +24,7 @@ class MovieAdapter(var items: List<Movie>) : RecyclerView.Adapter<MovieAdapter.M
     class MoviesViewsHolder(private val view: View) : MyViewHolder(view) {
         val title: TextView = view.findViewById(R.id.titleMovie)
         val releaseDate: TextView = view.findViewById(R.id.releaseDateMovie)
-        val ratingBar: RatingBar = view.findViewById(R.id.ratingBarMovie)
         val genres: TextView = view.findViewById(R.id.genresMovie)
-        val image: ImageView = view.findViewById(R.id.imageMovie)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -61,9 +59,7 @@ class MovieAdapter(var items: List<Movie>) : RecyclerView.Adapter<MovieAdapter.M
 
                 holder.title.text = current.title
                 holder.releaseDate.text = current.releaseDate.toString()
-                holder.ratingBar.rating = current.ratingBar
                 holder.genres.text = current.genres
-                holder.image.setImageResource() = current.image
 
             }
         }
@@ -74,7 +70,7 @@ class MovieAdapter(var items: List<Movie>) : RecyclerView.Adapter<MovieAdapter.M
 
 interface DisplayItem
 data class HeaderItem(val title: String) : DisplayItem
-data class Movie(val title: String, val releaseDate: String, val ratingBar: RatingBar, val genres: String, val image: Image) : DisplayItem
+data class Movie(val title: String, val releaseDate: String, val genres: String) : DisplayItem
 
 
 

@@ -23,11 +23,12 @@ class MainActivity : AppCompatActivity() {
 
     val items = listOf(
       HeaderItem("Liste de tous les films"),
-      Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
-      Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
-      Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
-      Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
-      Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller")
+      Movie("oui", "2099", "Thriller"),
+      Movie("oui", "2099", "Thriller"),
+      Movie("oui", "2099", "Thriller"),
+      Movie("oui", "2099", "Thriller"),
+      Movie("oui", "2099", "Thriller"),
+      Movie("oui", "2099", "Thriller"),
     )
     recyclerViewMovie.apply{
       layoutManager = LinearLayoutManager(this@MainActivity)

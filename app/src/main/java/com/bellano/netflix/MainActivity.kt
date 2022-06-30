@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bellano.themoviedblibrary.network.ApiHelper
 
 class MainActivity : AppCompatActivity() {
 
   // val topRated = ApiHelper.getTopRated()
   // topRated?.results
+
+  var test = ApiHelper.getImageBaseUrl()
 
   lateinit var recyclerViewMovie: RecyclerView
 
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     recyclerViewMovie = findViewById(R.id.recyclerViewMovie)
 
     val items = listOf(
+      HeaderItem("Liste de tous les films"),
       Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
       Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),
       Movie("oui", "2099", R.drawable.homme_affaires_caractere_avatar_isole_24877_60111, 4F, "Thriller"),

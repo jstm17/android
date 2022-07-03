@@ -1,13 +1,16 @@
 package com.bellano.netflix
 
+import android.content.Intent
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import org.w3c.dom.Text
 
 const val HEADER_TYPE = 0
@@ -24,7 +27,8 @@ class MovieAdapter(var items: List<DisplayItem>) : RecyclerView.Adapter<MovieAda
     class MoviesViewsHolder(private val view: View) : MyViewHolder(view) {
         val title: TextView = view.findViewById(R.id.titleMovie)
         val releaseDate: TextView = view.findViewById(R.id.releaseDateMovie)
-        val genres: TextView = view.findViewById(R.id.genresMovie)
+        val button : Button = view.findViewById(R.id.buttonNavig)
+        val image: ImageView = view.findViewById(R.id.imageMovie)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -56,11 +60,16 @@ class MovieAdapter(var items: List<DisplayItem>) : RecyclerView.Adapter<MovieAda
             }
             is MoviesViewsHolder -> {
                 val current: Movie = items[position] as Movie
+                val imageURL = current.poster_path?.let { "https://image.tmdb.org/t/p/original$it" } ?: "Image non trouvée"
 
                 holder.title.text = current.title
-                holder.releaseDate.text = current.releaseDate.toString()
-                holder.genres.text = current.genres
-
+                holder.releaseDate.text = current.release_date.toString()
+                holder.image.load(imageURL)
+                holder.button.setOnClickListener {
+                    val intent = Intent(it.context, DetailsActivity::class.java)
+                    intent.putExtra("id",current.id )
+                    it.context.startActivity(intent)
+                }
             }
         }
     }
@@ -70,7 +79,7 @@ class MovieAdapter(var items: List<DisplayItem>) : RecyclerView.Adapter<MovieAda
 
 interface DisplayItem
 data class HeaderItem(val title: String) : DisplayItem
-data class Movie(val title: String, val releaseDate: String, val genres: String) : DisplayItem
+data class Movie(val id: Int, val title: String, val release_date: String, val poster_path: String?) : DisplayItem
 
 
 

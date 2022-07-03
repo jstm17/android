@@ -32,23 +32,9 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBarMovie"
         app:layout_constraintStart_toEndOf="@+id/imageMovie"
         app:layout_constraintTop_toBottomOf="@+id/titleMovie"
         tools:text="Release date" />
-
-    <TextView
-        android:id="@+id/genresMovie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageMovie"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarMovie"
-        tools:text="Genres" />
 
     <ImageView
         android:id="@+id/imageMovie"
@@ -60,17 +46,16 @@
         tools:layout_constraintHeight_percent="90"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <RatingBar
-        android:id="@+id/ratingBarMovie"
-        style="@style/Widget.AppCompat.RatingBar.Small"
+    <Button
+        android:id="@+id/buttonNavig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:progressTint="@color/yellow"
-        android:secondaryProgressTint="@color/yellow"
-        app:layout_constraintBottom_toTopOf="@+id/genresMovie"
-        app:layout_constraintStart_toEndOf="@+id/imageMovie"
-        app:layout_constraintTop_toBottomOf="@+id/releaseDateMovie"
-        tools:rating="3" />
+        android:layout_marginStart="160dp"
+        android:layout_marginBottom="16dp"
+        android:text="DETAILS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageMovie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

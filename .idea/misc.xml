@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/laragon/www/android-iim/android/app/src/main/res/layout/activity_details.xml" value="0.25" />
         <entry key="..\:/laragon/www/android-iim/android/app/src/main/res/layout/item_header.xml" value="0.25" />
         <entry key="..\:/laragon/www/android-iim/android/app/src/main/res/layout/item_movie.xml" value="0.2796875" />
-        <entry key="..\:/laragon/www/android-iim/android/app/src/main/res/layout/main_activity.xml" value="0.18802083333333333" />
+        <entry key="..\:/laragon/www/android-iim/android/app/src/main/res/layout/main_activity.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/bg_search.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/bg_search2.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.165" />

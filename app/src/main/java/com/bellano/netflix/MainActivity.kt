@@ -1,84 +1,153 @@
 package com.bellano.netflix
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bellano.themoviedblibrary.network.ApiHelper
 
 class MainActivity : AppCompatActivity() {
 
-  // val topRated = ApiHelper.getTopRated()
-  // topRated?.results
-
-  var test = ApiHelper.getImageBaseUrl()
+  // var test = ApiHelper.getImageBaseUrl()
 
   lateinit var recyclerViewMovie: RecyclerView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main_activity)
+    val logo: TextView = findViewById(R.id.textView)
+    val imageSearch : ImageButton = findViewById(R.id.imageSearch)
+    val searchBar : EditText = findViewById(R.id.searchBar)
 
     recyclerViewMovie = findViewById(R.id.recyclerViewMovie)
 
-    val items = listOf(
-      HeaderItem("Liste de tous les films"),
-      Movie("oui", "2099", "Thriller"),
-      Movie("oui", "2099", "Thriller"),
-      Movie("oui", "2099", "Thriller"),
-      Movie("oui", "2099", "Thriller"),
-      Movie("oui", "2099", "Thriller"),
-      Movie("oui", "2099", "Thriller"),
-    )
+    logo.setOnClickListener{
+      searchBar.text.clear()
+      it.closeKeyboard()
+      getAllFilms()
+    }
+
+    imageSearch.setOnClickListener{
+      it.closeKeyboard()
+      val searchValue: String = searchBar.text.toString()
+      val films = getSearch(searchValue)
+      if (searchValue.isNotEmpty()) {
+        displayFilms(films)
+      } else {
+        getAllFilms()
+      }
+    }
+
+    getAllFilms()
+  }
+
+  private fun View.closeKeyboard() {
+    val input = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    input.hideSoftInputFromWindow(windowToken, 0)
+  }
+
+  private fun displayFilms(list: List<DisplayItem>) {
     recyclerViewMovie.apply{
       layoutManager = LinearLayoutManager(this@MainActivity)
-      adapter = MovieAdapter(items)
+      adapter = MovieAdapter(list)
     }
   }
-  //var count: Int = 0
-  //override fun onCreate(savedInstanceState: Bundle?) {
 
-  // super.onCreate(savedInstanceState)
-    // Ancienne méthdoe
-    // setContentView(R.layout.activity_main)
 
-    // Nouvelle methode avec databinding
-  //val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
-  // binding.recyclerView.layoutManager = GridLayoutManager (this, 1) // LinearLayoutManager(this)
+  private fun getAllFilms() {
+    val popular = getPopular()
+    val top = getTop()
+    val upcoming = getUpcoming()
 
-  // binding.recyclerView.adapter = MyAdapter(
-  //   listOf(
-  //     HeaderItem("Mes Diplômes"),
-  //     Diplome("DUT GEII", 2008, "Université Lille 1"),
-  //     Diplome("Licence Informatique", 2011, "Université Lille 1"),
-  //     Diplome("Master Informatique", 2013, "Université Lille 1"),
-  //     HeaderItem("Mes Experiences Pro"),
-  //   )
-  // )
+    displayFilms(popular + top + upcoming)
+  }
 
-  // binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+  private fun getPopular(): List<DisplayItem> {
+    val getPopular = ApiHelper.getPopularMovies()
+    val list = mutableListOf<Movie>()
+    val results = getPopular?.results
 
-  // val topRated = ApiHelper.getTopRated()
-  // topRated?.results
+    if (results != null) {
+      for (result in results) {
+        if (result.id !== null && result.title != null && result.release_date != null) {
+          val film = Movie(result.id!!, result.title!!, result.release_date!!, result.poster_path as String?)
+          list += film
+        }
+      }
+    }
 
-    //  Recuperer les references des vues
-    //  Ancienne méthode
-    //  val button: Button = findViewById(R.id.button)
-    //  val textView: TextView = findViewById(R.id.textView)
-    //  val textView = binding.textView
+    return listOf(
+      HeaderItem("Liste des films les plus populaires"),
+    ) + list
+  }
 
-    //val button = binding.button
+  private fun getTop(): List<DisplayItem> {
+    val getTop = ApiHelper.getTopRated()
+    val list = mutableListOf<Movie>()
+    val results = getTop?.results
 
-    // POsitioner le OnclickListener sur le bouton
-    /*  button.setOnClickListener {
-        // Incrementer le compteur + afficher la nouvelle valeur dans le texte
-        // Ancienne methode
-        // count = count.inc()
-        // textView.text = "$count"
+    if (results != null) {
+      for (result in results) {
+        if (result.id !== null && result.title != null && result.release_date != null) {
+          val film = Movie(result.id!!, result.title!!, result.release_date!!, result.poster_path as String?)
+          list += film
+        }
+      }
+    }
 
-        binding.count = binding.count?.inc() ?: 0
-      }*/
+    return listOf(
+      HeaderItem("Liste des films les mieux notés"),
+    ) + list
+  }
 
-  //}
+  private fun getUpcoming(): List<DisplayItem> {
+    val getUpcoming = ApiHelper.getUpcoming()
+    val list = mutableListOf<Movie>()
+    val results = getUpcoming?.results
+
+    if (results != null) {
+      for (result in results) {
+        if (result.id !== null && result.title != null && result.release_date != null) {
+          val film = Movie(result.id!!, result.title!!, result.release_date!!, result.poster_path as String?)
+          list += film
+        }
+      }
+    }
+
+    return listOf(
+      HeaderItem("Liste des films à venir"),
+    ) + list
+  }
+
+  private fun getSearch(searchText: String): List<DisplayItem> {
+    val getSearch = ApiHelper.searchMovie(searchText)
+    val list = mutableListOf<Movie>()
+    val results = getSearch?.results
+
+    if (results != null) {
+      for (result in results) {
+        if (result.id !== null && result.title !== null && result.release_date != null) {
+          val film = Movie(result.id!!, result.title!!, result.release_date!!, result.poster_path as String?)
+          list += film
+        }
+      }
+    }
+
+    if (list.isNotEmpty()) {
+      return listOf(
+        HeaderItem("Résultats pour : $searchText"),
+      ) + list
+    }
+
+    return listOf(
+        HeaderItem("Pas de films trouvés"),
+      )
+  }
 
 }
